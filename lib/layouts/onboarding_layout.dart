@@ -9,13 +9,17 @@ class OnBoardingLayout extends StatelessWidget {
   const OnBoardingLayout({
     Key? key,
     required this.size,
+    required this.pages,
     required this.heading,
     required this.imgUrl,
+    this.currentPage = 0,
   }) : super(key: key);
 
   final Size size;
+  final int pages;
   final String heading;
   final String imgUrl;
+  final int currentPage;
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +116,26 @@ class OnBoardingLayout extends StatelessWidget {
                         press: () => {
                           print('Login'),
                         },
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: List.generate(pages, (index) {
+                            return Container(
+                              margin: EdgeInsets.only(
+                                  right: (index == pages - 1)
+                                      ? 0.0
+                                      : kDefaultPadding / 5),
+                              height: 10.0,
+                              width: (index == currentPage) ? 20.0 : 10.0,
+                              decoration: BoxDecoration(
+                                  color: (index == currentPage)
+                                      ? Color(0xFF88879C)
+                                      : kBrandGrayColor,
+                                  borderRadius: BorderRadius.circular(10.0)),
+                            );
+                          }),
+                        ),
                       ),
                       OutlinedBtn(
                         copy: 'SignUp',

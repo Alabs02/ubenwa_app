@@ -15,7 +15,7 @@ List introductions = <Introduction>[
   ),
   Introduction(
     heading: 'Record Cry',
-    imgUrl: 'Onboarding_record_cry.png',
+    imgUrl: 'onboarding_record_cry.png',
   ),
   Introduction(
     heading: 'Screening Cry',
