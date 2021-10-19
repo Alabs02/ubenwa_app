@@ -38,8 +38,8 @@ class OnBoardingLayout extends StatelessWidget {
               end: Alignment(0.8, 0.3),
               colors: <Color>[
                 kOnePinkColor.withOpacity(0.4),
-                kOnePinkColor.withOpacity(0.6),
-                kOnePinkColor,
+                kTwoPinkColor.withOpacity(0.6),
+                kTwoPinkColor,
                 kOnePinkColor,
                 kTwoPinkColor.withGreen(-20),
                 kTwoPinkColor.withGreen(-10),
@@ -137,18 +137,88 @@ class OnBoardingLayout extends StatelessWidget {
                           }),
                         ),
                       ),
-                      OutlinedBtn(
-                        copy: 'SignUp',
-                        press: () => {
-                          print('Signup'),
-                        },
-                      ),
+                      (currentPage != (pages - 1))
+                          ? OutlinedBtn(
+                              copy: 'SignUp',
+                              press: () => {
+                                print('Signup'),
+                              },
+                            )
+                          : RoundedBtn(
+                              copy: 'SignUp',
+                              press: () => {print('SignUp')},
+                              colors: <Color>[
+                                kBlueGrayColor,
+                                kLightBlueColor,
+                              ],
+                            ),
                     ],
                   ),
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedBtn extends StatelessWidget {
+  const RoundedBtn({
+    Key? key,
+    required this.copy,
+    required this.press,
+    required this.colors,
+    this.py = 8.0,
+    this.px = 20.0,
+    this.textSize = 15.0,
+    this.textColor = Colors.white,
+    this.weight = FontWeight.w700,
+    this.radius = 20.0,
+  }) : super(key: key);
+
+  final String copy;
+  final double py;
+  final double px;
+  final List<Color> colors;
+  final Color textColor;
+  final double textSize;
+  final FontWeight weight;
+  final double radius;
+  final press;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: py,
+        horizontal: px,
+      ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomRight,
+          colors: colors,
+          tileMode: TileMode.clamp,
+        ),
+        borderRadius: BorderRadius.circular(radius),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: kDarkBlueColor.withOpacity(0.3),
+            blurRadius: 1.5,
+            offset: Offset(0, 0.5),
+          ),
+        ],
+      ),
+      child: Text(
+        '$copy',
+        style: GoogleFonts.ptSans(
+          fontWeight: weight,
+          fontSize: textSize,
+          fontStyle: FontStyle.normal,
+          letterSpacing: -0.24,
+          color: textColor,
         ),
       ),
     );
