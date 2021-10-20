@@ -33,21 +33,13 @@ class OnBoardingLayout extends StatelessWidget {
           vertical: kDefaultPadding * 1.5,
         ),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment(0.8, 0.3),
-              colors: <Color>[
-                kOnePinkColor.withOpacity(0.4),
-                kTwoPinkColor.withOpacity(0.6),
-                kTwoPinkColor,
-                kOnePinkColor,
-                kTwoPinkColor.withGreen(-20),
-                kTwoPinkColor.withGreen(-10),
-                kOneBlueColor.withOpacity(0.2),
-                kOneBlueColor.withOpacity(0.25),
-                kOneBlueColor.withOpacity(0.3),
-              ],
-              tileMode: TileMode.clamp),
+          color: Colors.white,
+          image: DecorationImage(
+            image: AssetImage(
+              'assets/images/onboarding_bg.png',
+            ),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Column(
           children: <Widget>[
@@ -57,7 +49,9 @@ class OnBoardingLayout extends StatelessWidget {
               children: [
                 OutlinedBtn(
                   copy: 'Skip',
-                  press: () => {print('Skip')},
+                  press: () {
+                    Navigator.of(context).pushReplacementNamed('/signup');
+                  },
                 ),
               ],
             ),
@@ -140,13 +134,17 @@ class OnBoardingLayout extends StatelessWidget {
                       (currentPage != (pages - 1))
                           ? OutlinedBtn(
                               copy: 'SignUp',
-                              press: () => {
-                                print('Signup'),
+                              press: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/signup');
                               },
                             )
                           : RoundedBtn(
                               copy: 'SignUp',
-                              press: () => {print('SignUp')},
+                              press: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/signup');
+                              },
                               colors: <Color>[
                                 kBlueGrayColor,
                                 kLightBlueColor,
@@ -190,35 +188,38 @@ class RoundedBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: py,
-        horizontal: px,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomRight,
-          colors: colors,
-          tileMode: TileMode.clamp,
+    return InkWell(
+      onTap: press,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: py,
+          horizontal: px,
         ),
-        borderRadius: BorderRadius.circular(radius),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: kDarkBlueColor.withOpacity(0.3),
-            blurRadius: 1.5,
-            offset: Offset(0, 0.5),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomRight,
+            colors: colors,
+            tileMode: TileMode.clamp,
           ),
-        ],
-      ),
-      child: Text(
-        '$copy',
-        style: GoogleFonts.ptSans(
-          fontWeight: weight,
-          fontSize: textSize,
-          fontStyle: FontStyle.normal,
-          letterSpacing: -0.24,
-          color: textColor,
+          borderRadius: BorderRadius.circular(radius),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: kDarkBlueColor.withOpacity(0.3),
+              blurRadius: 1.5,
+              offset: Offset(0, 0.5),
+            ),
+          ],
+        ),
+        child: Text(
+          '$copy',
+          style: GoogleFonts.ptSans(
+            fontWeight: weight,
+            fontSize: textSize,
+            fontStyle: FontStyle.normal,
+            letterSpacing: -0.24,
+            color: textColor,
+          ),
         ),
       ),
     );
