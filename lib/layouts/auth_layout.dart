@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ubenwa/components/input_field.dart';
-import 'package:ubenwa/components/input_label.dart';
+import 'package:show_up_animation/show_up_animation.dart';
 import 'package:ubenwa/components/social_media_services.dart';
 import 'package:ubenwa/components/text_icon_btn.dart';
 import 'package:ubenwa/constants/color_contants.dart';
 import 'package:ubenwa/constants/config_constants.dart';
-import 'package:ubenwa/layouts/onboarding_layout.dart';
 
 class AuthLayout extends StatefulWidget {
-  const AuthLayout({Key? key}) : super(key: key);
+  const AuthLayout({
+    Key? key,
+    required this.child,
+    this.height = 0.65,
+    this.hasFooter = true,
+    this.footerCopy = 'or signup with',
+  }) : super(key: key);
+
+  final Widget child;
+  final double height;
+  final bool hasFooter;
+  final String footerCopy;
 
   @override
   _AuthLayoutState createState() => _AuthLayoutState();
 }
 
 class _AuthLayoutState extends State<AuthLayout> {
+  String user = "clinical_user";
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -45,147 +56,119 @@ class _AuthLayoutState extends State<AuthLayout> {
                 ),
               ),
               SizedBox(height: kDefaultPadding * 1.5),
-              Container(
-                height: size.height * 0.65,
-                width: size.width,
-                padding: EdgeInsets.symmetric(
-                  vertical: kDefaultPadding,
-                  horizontal: kDefaultPadding,
-                ),
-                decoration: BoxDecoration(
-                  color: kTwoPinkColor,
-                  borderRadius: BorderRadius.circular(32.0),
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/white_card.png',
-                    ),
-                    fit: BoxFit.cover,
+              ShowUpAnimation(
+                delayStart: Duration(seconds: 1),
+                animationDuration: Duration(seconds: 1),
+                curve: Curves.bounceIn,
+                direction: Direction.horizontal,
+                offset: 0.5,
+                child: Container(
+                  height: size.height * widget.height,
+                  width: size.width,
+                  padding: EdgeInsets.symmetric(
+                    vertical: kDefaultPadding,
+                    horizontal: kDefaultPadding,
                   ),
-                  border: Border.all(
-                    width: 1.0,
-                    color: Color(0XFFFBF5FF),
-                  ),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: kDarkBlueColor.withOpacity(0.3),
-                      blurRadius: 4.0,
-                      offset: Offset(0, 2.0),
+                  decoration: BoxDecoration(
+                    color: (user == 'clinical_user')
+                        ? kTwoPinkColor
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(32.0),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        (user == 'clinical_user')
+                            ? 'assets/images/white_card.png'
+                            : 'assets/images/pink_card.png',
+                      ),
+                      fit: BoxFit.cover,
                     ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
+                    border: Border.all(
+                      width: 1.0,
+                      color: Color(0XFFFBF5FF),
+                    ),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: kDarkBlueColor.withOpacity(0.3),
+                        blurRadius: 4.0,
+                        offset: Offset(0, 2.0),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          width: size.width,
+                          decoration: BoxDecoration(
+                              // border: Border.all(
+                              //   width: 2.0,
+                              //   color: Colors.red,
+                              // ),
+                              ),
+                          child: widget.child,
+                        ),
+                      ),
+                      Container(
                         width: size.width,
-                        decoration: BoxDecoration(
-                            // border: Border.all(
-                            //   width: 2.0,
-                            //   color: Colors.red,
-                            // ),
+                        padding: EdgeInsets.only(
+                          left: (user == 'clinical_user') ? 20.0 : 0.0,
+                          right: (user == 'regular_user') ? 20.0 : 0.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            TextIconBtn(
+                              icon:
+                                  'assets/icons/${(user == 'clinical_user') ? 'stethoscope.png' : 'stethoscope_gray.png'}',
+                              title: 'Clinical User',
+                              textColor: (user == 'clinical_user')
+                                  ? kDarkBlueColor
+                                  : Color(0XFF88879C),
+                              press: () {
+                                setState(() {
+                                  user = 'clinical_user';
+                                });
+                              },
                             ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Text(
-                                'SignUp',
-                                style: GoogleFonts.mPlusRounded1c(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 22.0,
-                                  letterSpacing: -0.24,
-                                  color: kDarkBlueColor,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: kDefaultPadding),
-
-                            // Input Fields
-                            InputLabel(title: 'Username'),
-                            InputField(size: size),
-                            SizedBox(height: 7.0),
-
-                            InputLabel(title: 'Email'),
-                            InputField(size: size),
-                            SizedBox(height: 7.0),
-
-                            InputLabel(title: 'Password'),
-                            InputField(size: size),
-                            SizedBox(height: 7.0),
-
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: kDefaultPadding / 2,
-                              ),
-                              child: Text(
-                                'By entering your details, you are agreeing to our Terms of Service and Privacy Policy. Thanks!',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.notoSans(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 11.0,
-                                  letterSpacing: -0.24,
-                                  color: kDarkBlueColor,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 7.0),
-
-                            Center(
-                              child: RoundedBtn(
-                                press: () => {print('continue')},
-                                copy: 'Continue',
-                                colors: <Color>[
-                                  kBlueGrayColor,
-                                  kLightBlueColor,
-                                ],
-                                px: kDefaultPadding * 4,
-                                py: 10.0,
-                                radius: 34.0,
-                              ),
+                            TextIconBtn(
+                              icon:
+                                  'assets/icons/${(user == 'regular_user') ? 'profile.png' : 'profile_gray.png'}',
+                              title: 'Regular User',
+                              textColor: (user == 'regular_user')
+                                  ? kDarkBlueColor
+                                  : Color(0XFF88879C),
+                              press: () {
+                                setState(() {
+                                  user = 'regular_user';
+                                });
+                              },
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    Container(
-                      width: size.width,
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          TextIconBtn(
-                            icon: 'assets/icons/stethoscope.png',
-                            title: 'Clinical User',
-                            textColor: kDarkBlueColor,
-                            press: () => {print('Clinical User')},
-                          ),
-                          TextIconBtn(
-                            icon: 'assets/icons/profile_gray.png',
-                            title: 'Regular User',
-                            textColor: Color(0XFF88879C),
-                            press: () => {print('Regular User')},
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 17.0),
-              Text(
-                'or signup with',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.notoSans(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 11.0,
-                  letterSpacing: -0.24,
-                  color: kBrandGrayColor,
-                ),
-              ),
+              widget.hasFooter
+                  ? Text(
+                      '${widget.footerCopy}',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.notoSans(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 11.0,
+                        letterSpacing: -0.24,
+                        color: kBrandGrayColor,
+                      ),
+                    )
+                  : SizedBox.shrink(),
               SizedBox(height: 12.0),
-              SocialMediaServices(size: size),
+              widget.hasFooter
+                  ? SocialMediaServices(size: size)
+                  : SizedBox.shrink(),
               SizedBox(height: kDefaultPadding),
             ],
           ),

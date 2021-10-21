@@ -7,9 +7,11 @@ class InputField extends StatelessWidget {
   const InputField({
     Key? key,
     required this.size,
+    this.isObscure = false,
   }) : super(key: key);
 
   final Size size;
+  final bool isObscure;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +62,10 @@ class InputField extends StatelessWidget {
           style: GoogleFonts.mPlusRounded1c(
             fontSize: 13.0,
             fontWeight: FontWeight.w500,
-            letterSpacing: 0.32,
+            letterSpacing: !isObscure ? 0.32 : 1.5,
             color: kDarkBlueColor,
           ),
+          obscureText: isObscure,
         ),
       ),
     );
