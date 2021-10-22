@@ -5,6 +5,7 @@ import 'package:ubenwa/screens/auth/verify_account_auth_screen.dart';
 import 'package:ubenwa/screens/auth/verify_otp_auth_screen.dart';
 import 'package:ubenwa/screens/home_screen.dart';
 import 'package:ubenwa/screens/onboarding_screen.dart';
+import 'package:ubenwa/screens/recording_screen.dart';
 
 void main() => runApp(UbenwaApp());
 
@@ -17,13 +18,14 @@ class UbenwaApp extends StatelessWidget {
       title: 'Ubenwa App',
       home: HomeScreen(),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/verify_otp',
+      initialRoute: '/recording',
       routes: {
         '/onboarding': (context) => OnBoardingScreen(),
         '/signup': (context) => SignUpAuthSreen(),
         '/login': (context) => LoginAuthScreen(),
         '/verify_account': (context) => VerifyAccountAuthScreen(),
         '/verify_otp': (context) => VerifyOtpAuthScreen(),
+        '/recording': (context) => RecordingScreen(),
       },
     );
   }
