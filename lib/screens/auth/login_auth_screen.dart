@@ -61,7 +61,7 @@ class _LoginAuthScreenState extends State<LoginAuthScreen> {
           Center(
             child: RoundedBtn(
               press: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, '/home');
               },
               copy: 'Continue',
               colors: <Color>[

@@ -60,7 +60,7 @@ class _VerifyOtpAuthScreenState extends State<VerifyOtpAuthScreen> {
           Center(
             child: RoundedBtn(
               press: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, '/home');
               },
               copy: 'Continue',
               colors: <Color>[

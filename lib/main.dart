@@ -35,6 +35,7 @@ class UbenwaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: '/recording',
       routes: {
+        '/home': (context) => HomeScreen(),
         '/signup': (context) => SignUpAuthSreen(),
         '/login': (context) => LoginAuthScreen(),
         '/verify_account': (context) => VerifyAccountAuthScreen(),
