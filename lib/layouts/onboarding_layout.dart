@@ -13,6 +13,7 @@ class OnBoardingLayout extends StatelessWidget {
     required this.pages,
     required this.heading,
     required this.imgUrl,
+    required this.boardingInfo,
     this.currentPage = 0,
   }) : super(key: key);
 
@@ -21,6 +22,7 @@ class OnBoardingLayout extends StatelessWidget {
   final String heading;
   final String imgUrl;
   final int currentPage;
+  final boardingInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,8 @@ class OnBoardingLayout extends StatelessWidget {
               children: [
                 OutlinedBtn(
                   copy: 'Skip',
-                  press: () {
+                  press: () async {
+                    await boardingInfo();
                     Navigator.of(context).pushReplacementNamed('/signup');
                   },
                 ),
@@ -109,6 +112,7 @@ class OnBoardingLayout extends StatelessWidget {
                       OutlinedBtn(
                         copy: 'Login',
                         press: () {
+                          boardingInfo();
                           Navigator.of(context).pushReplacementNamed('/login');
                         },
                       ),
@@ -135,14 +139,16 @@ class OnBoardingLayout extends StatelessWidget {
                       (currentPage != (pages - 1))
                           ? OutlinedBtn(
                               copy: 'SignUp',
-                              press: () {
+                              press: () async {
+                                await boardingInfo();
                                 Navigator.of(context)
                                     .pushReplacementNamed('/signup');
                               },
                             )
                           : RoundedBtn(
                               copy: 'SignUp',
-                              press: () {
+                              press: () async {
+                                await boardingInfo();
                                 Navigator.of(context)
                                     .pushReplacementNamed('/signup');
                               },
